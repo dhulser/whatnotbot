@@ -1,0 +1,13 @@
+name: Cron Test
+
+on:
+  schedule:
+    - cron: '*/2 * * * *'  # every 2 minutes
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print date
+        run: date
