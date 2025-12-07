@@ -3,7 +3,7 @@ name: Trigger Whatnot Check
 on:
   schedule:
     - cron: '*/5 * * * *'  # Every 5 minutes (UTC)
-  workflow_dispatch:        # Also allow manual runs
+  workflow_dispatch:        # Allow manual runs from the UI
 
 jobs:
   trigger:
