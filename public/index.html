@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Whatnot Show Monitor</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Whatnot Show Monitor</h1>
+      <div class="header-actions">
+        <a href="/debug" class="btn btn-secondary" style="margin-right: 0.5rem;">Debug / Logs</a>
+        <button id="refreshAll" class="btn btn-primary">Refresh All</button>
+      </div>
+    </header>
+
+    <div id="config" class="config-section">
+      <h2>Configuration</h2>
+      <div id="configDetails"></div>
+    </div>
+
+    <div id="status" class="status-section">
+      <h2>Monitored Users</h2>
+      <div id="userCards"></div>
+    </div>
+
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+
+    <div id="notification" class="notification hidden"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

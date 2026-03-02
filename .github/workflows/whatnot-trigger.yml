@@ -2,23 +2,24 @@ name: Trigger Whatnot Check
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes (UTC)
-  workflow_dispatch:        # Allow manual runs from the UI
+    - cron: '*/5 * * * *'   # Every 5 minutes (UTC)
+  workflow_dispatch:         # Allow manual runs from the GitHub UI
 
 jobs:
   trigger:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Whatnot watcher on Replit
+      - name: Trigger Whatnot watcher
         env:
-          REPLIT_URL: ${{ secrets.REPLIT_WHATNOT_URL }}
+          BOT_URL: ${{ secrets.BOT_URL }}
           TRIGGER_SECRET: ${{ secrets.TRIGGER_SECRET }}
         run: |
-          echo "Calling Replit watcher at $REPLIT_URL"
-          curl -X POST "$REPLIT_URL/run?token=$TRIGGER_SECRET" \
+          echo "Calling bot at $BOT_URL"
+          curl -X POST "$BOT_URL/run?token=$TRIGGER_SECRET" \
             --fail \
             -H "Content-Type: application/json" \
             -d '{}' \
             -s -S
+          echo ""
           echo "Done."
