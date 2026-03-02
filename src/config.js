@@ -15,6 +15,9 @@ const config = {
 
   whatnotBaseUrl: 'https://www.whatnot.com',
   whatnotApiUrl: 'https://api.whatnot.com/graphql',
+
+  // Internal cron schedule — override with e.g. '*/10 * * * *' for 10-min interval
+  cronSchedule: process.env.CRON_SCHEDULE || '*/5 * * * *',
 };
 
 function validateConfig() {

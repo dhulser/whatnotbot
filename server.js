@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cron = require('node-cron');
 const { config, validateConfig, logConfig } = require('./src/config');
 const {
   loadState,
@@ -193,17 +194,28 @@ async function startServer() {
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log('\n========================================');
-    console.log('   Whatnot Monitor v2 — HTTP Trigger   ');
+    console.log('   Whatnot Monitor v2 — Self-Scheduled  ');
     console.log('========================================');
     console.log(`Listening on http://0.0.0.0:${PORT}`);
     console.log('');
     console.log('Endpoints:');
     console.log('  GET  /            Health check');
     console.log('  GET  /health      Health check');
-    console.log('  POST /run         Trigger check (token required)');
+    console.log('  POST /run         Manual trigger (token required)');
     console.log('  GET  /dashboard   Web dashboard');
     console.log('  GET  /debug       Debug logs');
     console.log('========================================\n');
+
+    // Run once immediately on startup so we don't wait up to 5 min for first check
+    console.log('[STARTUP] Running initial check...');
+    runOnce().catch(err => console.error('[STARTUP] Initial run error:', err.message));
+
+    // Internal cron — fires on clock-aligned 5-min marks (or CRON_SCHEDULE override)
+    cron.schedule(config.cronSchedule, () => {
+      console.log('\n[CRON] Scheduled trigger firing...');
+      runOnce().catch(err => console.error('[CRON] Error during scheduled run:', err.message));
+    });
+    console.log(`[CRON] Scheduler started: ${config.cronSchedule}`);
   });
 }
 
